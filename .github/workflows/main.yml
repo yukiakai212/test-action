@@ -1,0 +1,22 @@
+name: Test Parse NPM Tag
+
+on:
+  push:
+    tags:
+      - 'v*'   # Kích hoạt khi push tag như v1.0.0
+
+jobs:
+  parse:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Parse publish tag from Git tag
+        id: parse
+        uses: yukiakai212/publish-tag@v1
+
+      - name: Show parsed info
+        run: |
+          echo "Tag Type: ${{ steps.parse.outputs.tag }}"
+          echo "Tag Version: ${{ steps.parse.outputs.version }}"
